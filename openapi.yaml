@@ -1,0 +1,13 @@
+openapi: 3.0.3
+info:
+  title: The SpatioTemporal Asset Catalog API - Language
+  description: Defines how to make multi-lingual STAC APIs available.
+  version: 1.0.0-rc.2
+  contact:
+    name: STAC Specification
+    url: 'http://stacspec.org'
+  license:
+    name: Apache License 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+paths: {}
+components: {}
