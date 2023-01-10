@@ -43,7 +43,7 @@ Generally, each language identifier MUST be a valid `Language-Tag` as specified 
 GET / HTTP/2
 Host: stac-api.example.com
 Accept: application/json,text/json,application/geo+json;q=0.9
-Accept-Language: de-DE,de;q=0.9,en-US;q=0.8;en=0.7;fr=0.3
+Accept-Language: de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.3
 ```
 
 ## Query Parameter
