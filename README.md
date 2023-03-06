@@ -97,11 +97,16 @@ Content-Language: en-US
     "title": "A simple STAC API Example",
     "description": "This Catalog aims to demonstrate the a simple landing page",
     "type": "Catalog",
-    "language": "en-US",
+    "language": {
+        "code": "en-US",
+        "name": "English (United States)"
+    },
     "languages": [
-      "en-US",
-      "en-GB",
-      "fr"
+        {
+            "code": "de",
+            "name": "Deutsch",
+            "alternate": "German"
+        }
     ],
     "conformsTo" : [
         "https://api.stacspec.org/v1.0.0-rc.2/core",
@@ -130,25 +135,19 @@ Content-Language: en-US
             "rel": "service-doc",
             "type": "text/html",
             "href": "https://example.com/api.html",
-            "hreflang": "en"
+            "hreflang": "en-US"
         },
         {
             "rel": "service-doc",
             "type": "text/html",
-            "href": "https://example.com/fr/api.html",
-            "hreflang": "fr"
+            "href": "https://example.com/de/api.html",
+            "hreflang": "de"
         },
         {
-            "rel": "child",
+            "rel": "alternate",
             "type": "application/json",
-            "href": "https://stac-api.example.com/catalogs/sentinel-2",
-            "hreflang": "en-US"
-        },
-        {
-            "rel": "child",
-            "type": "application/json",
-            "href": "https://stac-api.example.com/catalogs/landsat-8",
-            "hreflang": "en-US"
+            "href": "https://example.com/?language=de",
+            "hreflang": "de"
         }
     ]
 }
