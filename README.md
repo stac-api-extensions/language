@@ -53,10 +53,9 @@ Accept-Language: de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.3
 
 In addition to the [header-based approach](#http-headers), servers MAY support a query parameter `language`.
 
-The parameter only supports requesting the document in a single language while via HTTP headers
-multiple languages can be specified.
-
-The language identifier MUST be a valid `Language-Tag` as specified in [RFC 5646](https://www.rfc-editor.org/rfc/rfc5646).
+If provided, the `language` query parameter MUST be at least valid `Language-Tag` as specified in [RFC 5646](https://www.rfc-editor.org/rfc/rfc5646).
+The query parameter follows the exact same schema as the `Accept-Language` header,
+so you can define a list of prioritized languages, e.g. `de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.3`.
 
 **Example:**
 
@@ -65,7 +64,7 @@ GET /?language=de HTTP/2
 Host: stac-api.example.com
 ```
 
-## Response body
+## Response Body
 
 The response body SHOULD inform clients about the language of the resource and any resource it links to.
 For this, it implements the [STAC language extension](https://github.com/stac-api-extensions/language).
