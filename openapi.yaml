@@ -14,11 +14,13 @@ info:
   license:
     name: Apache License 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0'
+tags:
+  - name: Language
+    description: Endpoints with support for the STAC API Language Extension
 paths:
   '/':
     get:
       tags:
-        - Core
         - Language
       summary: landing page
       description: |-
@@ -131,11 +133,11 @@ components:
         The parameter accepts a comma-separated list of language identifiers, optionally with priority per language.
 
         This parameter value follows the specification of the `Accept-Language` HTTP header.
-      required: false
       schema:
         $ref: '#/components/schemas/prioritizedLanguages'
       explode: false
       style: form
+      example:
         - de
         - en;q=0.7
         - fr;q=0.1
