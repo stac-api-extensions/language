@@ -7,8 +7,6 @@ info:
     This components defined in this extension are not restricted to the exemplary 
     endpoint defined below. For example, this extension works well with
     STAC API - Features and STAC API - Item Search.
-
-    It is 
   version: '1.0.0'
   contact:
     name: STAC Specification
@@ -19,19 +17,28 @@ info:
 paths:
   '/':
     get:
+      tags:
+        - Core
+        - Language
       summary: landing page
       description: |-
         Returns the root STAC Catalog or STAC Collection that is the entry point
         for users to browse with STAC Browser or for search engines to crawl.
         This can either return a single STAC Collection or more commonly a STAC
         catalog.
+
+        - The STAC API - Language conformance class MUST be added to the `conformsTo` array.
+        - The STAC Language extension identifier SHOULD be added to the `stac_extensions` array.
+      parameters:
+        - $ref: '#/components/parameters/acceptLanguage'
+        - $ref: '#/components/parameters/language'
       responses:
         '200':
           description: |-
             The landing page as defined in STAC API - Core.
-          parameters:
-            - $ref: '#/components/parameters/accept-language'
-            - $ref: '#/components/parameters/language'
+          headers:
+            Content-Language:
+              $ref: '#/components/headers/contentLanguage'
           content:
             application/json:
               schema:
@@ -82,9 +89,7 @@ paths:
 components:
   headers:
     contentLanguage:
-      name: Content-Language
       x-stac-api-fragment: language
-      in: header
       description: |-
         **Extension:** Language (I18N)
 
@@ -107,12 +112,14 @@ components:
         Language identifiers, optionally with priority.
 
         This parameter follows the specification of the `Accept-Language` HTTP header.
-      required: true
       schema:
-        $ref: '#/components/schemas/languageCode'
+        $ref: '#/components/schemas/prioritizedLanguages'
       style: simple
       explode: false
-      example: 'de;q=1,en;q=0.7,fr;q=0.1'
+      example:
+        - de
+        - en;q=0.7
+        - fr;q=0.1
     language:
       name: language
       x-stac-api-fragment: language
@@ -120,29 +127,39 @@ components:
       description: |-
         **Extension:** Language (I18N)
 
-        Language identifiers, optionally with priority.
+        Optional way to query for specific languages for environments that can't send HTTP headers in a simple way (e.g. a Web Browser).
+        The parameter accepts a comma-separated list of language identifiers, optionally with priority per language.
 
         This parameter value follows the specification of the `Accept-Language` HTTP header.
       required: false
       schema:
-        $ref: '#/components/schemas/languageCode'
+        $ref: '#/components/schemas/prioritizedLanguages'
       explode: false
       style: form
-      example: 'de;q=1,en;q=0.7,fr;q=0.1'
+        - de
+        - en;q=0.7
+        - fr;q=0.1
   schemas:
     languageCode:
       type: string
       description: The language tag as per RFC 5646.
       pattern: "^((?:(en-GB-oed|i-ami|i-bnn|i-default|i-enochian|i-hak|i-klingon|i-lux|i-mingo|i-navajo|i-pwn|i-tao|i-tay|i-tsu|sgn-BE-FR|sgn-BE-NL|sgn-CH-DE)|(art-lojban|cel-gaulish|no-bok|no-nyn|zh-guoyu|zh-hakka|zh-min|zh-min-nan|zh-xiang))|((?:([A-Za-z]{2,3}(-(?:[A-Za-z]{3}(-[A-Za-z]{3}){0,2}))?)|[A-Za-z]{4}|[A-Za-z]{5,8})(-(?:[A-Za-z]{4}))?(-(?:[A-Za-z]{2}|[0-9]{3}))?(-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(-(?:[0-9A-WY-Za-wy-z](-[A-Za-z0-9]{2,8})+))*(-(?:x(-[A-Za-z0-9]{1,8})+))?)|(?:x(-[A-Za-z0-9]{1,8})+))$"
       example: el
+    prioritizedLanguages:
+      type: array
+      items:
+        type: string
+        description: The language tag as per RFC 5646, with optional priority parameter `q` (0 - 1).
+        pattern: "^((?:(en-GB-oed|i-ami|i-bnn|i-default|i-enochian|i-hak|i-klingon|i-lux|i-mingo|i-navajo|i-pwn|i-tao|i-tay|i-tsu|sgn-BE-FR|sgn-BE-NL|sgn-CH-DE)|(art-lojban|cel-gaulish|no-bok|no-nyn|zh-guoyu|zh-hakka|zh-min|zh-min-nan|zh-xiang))|((?:([A-Za-z]{2,3}(-(?:[A-Za-z]{3}(-[A-Za-z]{3}){0,2}))?)|[A-Za-z]{4}|[A-Za-z]{5,8})(-(?:[A-Za-z]{4}))?(-(?:[A-Za-z]{2}|[0-9]{3}))?(-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(-(?:[0-9A-WY-Za-wy-z](-[A-Za-z0-9]{2,8})+))*(-(?:x(-[A-Za-z0-9]{1,8})+))?)|(?:x(-[A-Za-z0-9]{1,8})+))(?:;q=(?:1|1\\.0+|0|0\\.[0-9]+))?$"
+        example: 'de;q=0.7'
     language:
       type: object
-      description: The language used for textual values in this STAC object.
+      description: Defines a language the STAC object is available in.
       required:
         - code
       properties:
         code:
-          $ref: '#/components/schemas/langaugeCode'
+          $ref: '#/components/schemas/languageCode'
         name:
           type: string
           description: The untranslated name of of the language.
@@ -180,4 +197,11 @@ components:
           dir: rtl
     landingPageWithLanguage:
       x-stac-api-fragment: language
-      todo: true
+      type: object
+      properties:
+        language:
+          allOf:
+            - $ref: '#/components/schemas/language'
+            - description: The language used for textual values in this STAC object.
+        languages:
+          $ref: '#/components/schemas/languages'
