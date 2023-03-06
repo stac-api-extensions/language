@@ -1,13 +1,183 @@
 openapi: 3.0.3
 info:
-  title: The SpatioTemporal Asset Catalog API - Language
-  description: Defines how to make multi-lingual STAC APIs available.
-  version: 1.0.0-rc.2
+  title: STAC API - Language Extension
+  description: |-
+    Defines how to make multi-lingual STAC APIs available.
+
+    This components defined in this extension are not restricted to the exemplary 
+    endpoint defined below. For example, this extension works well with
+    STAC API - Features and STAC API - Item Search.
+
+    It is 
+  version: '1.0.0'
   contact:
     name: STAC Specification
     url: 'http://stacspec.org'
   license:
     name: Apache License 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0'
-paths: {}
-components: {}
+paths:
+  '/':
+    get:
+      summary: landing page
+      description: |-
+        Returns the root STAC Catalog or STAC Collection that is the entry point
+        for users to browse with STAC Browser or for search engines to crawl.
+        This can either return a single STAC Collection or more commonly a STAC
+        catalog.
+      responses:
+        '200':
+          description: |-
+            The landing page as defined in STAC API - Core.
+          parameters:
+            - $ref: '#/components/parameters/accept-language'
+            - $ref: '#/components/parameters/language'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'https://api.stacspec.org/v1.0.0-rc.2/core/openapi.yaml#/components/schemas/landingPage'
+                  - $ref: '#/components/schemas/landingPageWithLanguage'
+              example:
+                type: Catalog
+                stac_version: 1.0.0
+                stac_extensions:
+                  - https://stac-extensions.github.io/language/v1.0.0/schema.json
+                id: sentinel
+                title: Copernicus Sentinel Imagery
+                description: Catalog of Copernicus Sentinel 1 and 2 imagery.
+                conformsTo:
+                  - https://api.stacspec.org/v1.0.0-rc.2/core
+                  - https://api.stacspec.org/v1.0.0/language
+                language:
+                  code: en
+                  name: English
+                languages:
+                  - code: de
+                    name: Deutsch
+                    alternate: German
+                links:
+                  - href: http://data.example.org/
+                    rel: self
+                    hreflang: en
+                    type: application/json
+                    title: This document
+                  - href: http://data.example.org/api
+                    rel: service-desc
+                    hreflang: en
+                    type: application/vnd.oai.openapi+json;version=3.0
+                    title: The API definition
+                  - href: http://data.example.org/api.html
+                    rel: service-doc
+                    hreflang: en
+                    type: text/html
+                    title: The API documentation
+                  - href: http://data.example.org/?language=de
+                    rel: alternate
+                    hreflang: de
+                    type: application/json
+                    title: This document in German language
+        '500':
+          $ref: 'https://api.stacspec.org/v1.0.0-rc.2/core/openapi.yaml#/components/responses/Error'
+components:
+  headers:
+    contentLanguage:
+      name: Content-Language
+      x-stac-api-fragment: language
+      in: header
+      description: |-
+        **Extension:** Language (I18N)
+
+        Language identifier for the language that the response is made available in.
+
+        This parameter follows the specification of the `Content-Language` HTTP header.
+      required: true
+      schema:
+        $ref: '#/components/schemas/languageCode'
+      style: simple
+      example: en
+  parameters:
+    acceptLanguage:
+      name: Accept-Language
+      x-stac-api-fragment: language
+      in: header
+      description: |-
+        **Extension:** Language (I18N)
+
+        Language identifiers, optionally with priority.
+
+        This parameter follows the specification of the `Accept-Language` HTTP header.
+      required: true
+      schema:
+        $ref: '#/components/schemas/languageCode'
+      style: simple
+      explode: false
+      example: 'de;q=1,en;q=0.7,fr;q=0.1'
+    language:
+      name: language
+      x-stac-api-fragment: language
+      in: query
+      description: |-
+        **Extension:** Language (I18N)
+
+        Language identifiers, optionally with priority.
+
+        This parameter value follows the specification of the `Accept-Language` HTTP header.
+      required: false
+      schema:
+        $ref: '#/components/schemas/languageCode'
+      explode: false
+      style: form
+      example: 'de;q=1,en;q=0.7,fr;q=0.1'
+  schemas:
+    languageCode:
+      type: string
+      description: The language tag as per RFC 5646.
+      pattern: "^((?:(en-GB-oed|i-ami|i-bnn|i-default|i-enochian|i-hak|i-klingon|i-lux|i-mingo|i-navajo|i-pwn|i-tao|i-tay|i-tsu|sgn-BE-FR|sgn-BE-NL|sgn-CH-DE)|(art-lojban|cel-gaulish|no-bok|no-nyn|zh-guoyu|zh-hakka|zh-min|zh-min-nan|zh-xiang))|((?:([A-Za-z]{2,3}(-(?:[A-Za-z]{3}(-[A-Za-z]{3}){0,2}))?)|[A-Za-z]{4}|[A-Za-z]{5,8})(-(?:[A-Za-z]{4}))?(-(?:[A-Za-z]{2}|[0-9]{3}))?(-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(-(?:[0-9A-WY-Za-wy-z](-[A-Za-z0-9]{2,8})+))*(-(?:x(-[A-Za-z0-9]{1,8})+))?)|(?:x(-[A-Za-z0-9]{1,8})+))$"
+      example: el
+    language:
+      type: object
+      description: The language used for textual values in this STAC object.
+      required:
+        - code
+      properties:
+        code:
+          $ref: '#/components/schemas/langaugeCode'
+        name:
+          type: string
+          description: The untranslated name of of the language.
+          example: Ελληνικά
+        alternate:
+          type: string
+          description: The name of the language in another well-understood language, usually in English.
+          example: Greek
+        dir:
+          type: string
+          description:
+            The direction for text in this language.
+            Either left-to-right (`ltr`, default) or right-to-left (`rtl`).
+          enum:
+            - rtl
+            - ltr
+          default: ltr
+    languages:
+      type: array
+      description: This list of other languages in which the STAC object can be retrieved.
+      items:
+        $ref: '#/components/schemas/language'
+      example:
+        - code: en
+          name: English
+        - code: de-DE
+          name: Deutsch (Deutschland)
+          alternate: German (Germany)
+        - code: el
+          name: Ελληνικά
+          alternate: Greek
+        - code: ar
+          name: عربي
+          alternate: Arabic
+          dir: rtl
+    landingPageWithLanguage:
+      x-stac-api-fragment: language
+      todo: true
