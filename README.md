@@ -3,7 +3,7 @@
 - **Title:** Language (I18N)
 - **OpenAPI specification:** [openapi.yaml](openapi.yaml)
 - **Conformance Classes:**
-  - <https://api.stacspec.org/v1.0.0-rc.2/language>
+  - <https://api.stacspec.org/v1.0.0/language>
 - **Scope:** STAC API - Core
 - **[Extension Maturity Classification](https://github.com/radiantearth/stac-api-spec/tree/main/README.md#maturity-classification):** Proposal
 - **Dependencies:**
@@ -73,7 +73,7 @@ For this, it implements the [STAC language extension](https://github.com/stac-ap
 ### Example
 
 This example request and response is based on the
-[example langing page for STAC API - Core](https://github.com/radiantearth/stac-api-spec/tree/v1.0.0-rc.2/core#example-landing-page-for-stac-api---core)
+[example landing page for STAC API - Core](https://github.com/radiantearth/stac-api-spec/tree/v1.0.0-rc.2/core#example-landing-page-for-stac-api---core)
 and shows the usage of this extension.
 
 **Header:**
@@ -106,7 +106,7 @@ Content-Language: en-US
     ],
     "conformsTo" : [
         "https://api.stacspec.org/v1.0.0-rc.2/core",
-        "https://api.stacspec.org/v1.0.0-rc.2/language"
+        "https://api.stacspec.org/v1.0.0/language"
     ],
     "links": [
         {
