@@ -16,4 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-[Unreleased]: <https://github.com/stac-api-extensions/language/compare/v1.0.0...HEAD>
+## [v1.0.0-rc.2] - 2023-03-29
+
+- First release of this extension
+
+[Unreleased]: <https://github.com/stac-api-extensions/language/compare/v1.0.0-rc.2...HEAD>
+[v1.0.0-rc.2]: <https://github.com/stac-api-extensions/language/tree/v1.0.0-rc.2>

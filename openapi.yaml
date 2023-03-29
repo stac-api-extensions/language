@@ -7,7 +7,7 @@ info:
     This components defined in this extension are not restricted to the exemplary 
     endpoint defined below. For example, this extension works well with
     STAC API - Features and STAC API - Item Search.
-  version: '1.0.0'
+  version: '1.0.0-rc.2'
   contact:
     name: STAC Specification
     url: 'http://stacspec.org'

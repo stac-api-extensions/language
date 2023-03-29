@@ -3,7 +3,7 @@
 - **Title:** Language (I18N)
 - **OpenAPI specification:** [openapi.yaml](openapi.yaml)
 - **Conformance Classes:**
-  - <https://api.stacspec.org/v1.0.0/language>
+  - <https://api.stacspec.org/v1.0.0-rc.2/language>
 - **Scope:** STAC API - Core
 - **[Extension Maturity Classification](https://github.com/radiantearth/stac-api-spec/tree/main/README.md#maturity-classification):** Proposal
 - **Dependencies:**
@@ -16,7 +16,7 @@ which defines how to make multi-lingual STAC APIs available.
 
 The focus of this extension is to add API specific behavior on top of the
 [language extension for STAC itself](https://github.com/stac-api-extensions/language).
-So there's a *STAC* Language extension **and** a *STAC API* Langauge extension.
+So there's a *STAC* Language extension **and** a *STAC API* Language extension.
 
 This specification aligns as much as possible with
 [OGC API - Features](http://docs.opengeospatial.org/DRAFTS/17-069r4.html#string_i18n) and 
@@ -116,7 +116,7 @@ Content-Language: en-US
     ],
     "conformsTo" : [
         "https://api.stacspec.org/v1.0.0-rc.2/core",
-        "https://api.stacspec.org/v1.0.0/language"
+        "https://api.stacspec.org/v1.0.0-rc.2/language"
     ],
     "links": [
         {
