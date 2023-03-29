@@ -64,6 +64,12 @@ GET /?language=de HTTP/2
 Host: stac-api.example.com
 ```
 
+**Note:** If both the header `Accept-Language` and the query parameter `language` are provided by a client,
+it is recommended to use the values provided in the query parameter.
+This is recommended to avoid issues with some clients (such as a web browser) that may send headers
+that are not under control of a user.
+Ultimately, it's up to the implementation to decide which source it prioritizes.
+
 ## Response Body
 
 The response body SHOULD inform clients about the language of the resource and any resource it links to.
