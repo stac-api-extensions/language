@@ -5,7 +5,7 @@
 - **Conformance Classes:**
   - <https://api.stacspec.org/v1.0.0-rc.2/language>
 - **Scope:** STAC API - Core
-- **[Extension Maturity Classification](https://github.com/radiantearth/stac-api-spec/tree/main/README.md#maturity-classification):** Proposal
+- **[Extension Maturity Classification](https://github.com/radiantearth/stac-api-spec/tree/main/README.md#maturity-classification):** Pilot
 - **Dependencies:**
   - [STAC API - Core](https://github.com/radiantearth/stac-api-spec/tree/v1.0.0-rc.2/core)
 - **Owner**: @m-mohr
