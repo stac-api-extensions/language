@@ -15,7 +15,7 @@ This document is the Language (I18N) Extension to the
 which defines how to make multi-lingual STAC APIs available.
 
 The focus of this extension is to add API specific behavior on top of the
-[language extension for STAC itself](https://github.com/stac-api-extensions/language).
+[language extension for STAC itself](https://github.com/stac-extensions/language).
 So there's a *STAC* Language extension **and** a *STAC API* Language extension.
 
 This specification aligns as much as possible with
